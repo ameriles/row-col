@@ -1,0 +1,4 @@
+KeyConst.TPU debe ir en el directorio UNITS de tu Compilador.
+No pongo el fuente porque no hace nada extraordinario, sino que es una
+sola funcion que recibe un codigo SCAN del teclado y devuelve el Nombre
+de esta tecla.

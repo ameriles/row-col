@@ -1,0 +1,223 @@
+Fecha y Hora: Viernes 2 de Agosto de 2002 - Hora 1:00 AM
+
+                                 ROW & COL
+				VERSION 1.0
+
+PROGRAMADO POR AGUSTIN MERILES USANDO LA LIBRERIA GRAFICA U.G.O.
+
+-> PARA PODER JUGAR
+
+1.1 Introducción
+	Este es mi primer juego programado con U.G.O. y el primero 
+que realmente termino. Creo que quedo bastante bien, me hubiera gustado
+ponerle musica de fondo, pero era imposible debido a que no soy capaz
+de modificar la libreria para reproducir archivos MOD o MIDI, sin tener
+problemas con los RAW. Pero en conjunto creo que salio bien.
+	Otra cosa mala puede ser que creo yo el codigo es bastante
+extenso (1800 lineas mas o menos) y aunque esta comentado, algunos
+son claros (los referentes al juego principal en si), debido a que son 
+los primeros que hice y en ese entonces estaba con tiempo y ganas de 
+comentar. No asi los efectos especiales o menues, etc tiene un comentario
+bastante pobre.
+
+1.2 Instalación y contenido del ZIP
+	No tengo idea de cuales son los requerimientos minimos, pero 
+podría acercarme diciendo que andará bien en una PC en donde funcione 
+bien UGO :-).
+	El juego para funcionar requiere de los siguientes archivos:
+
+* FICHAS.BSF: Contiene absolutamente todos los sprites del juego.
+* FICHAS.PAL: Contiene la paleta del juego.
+* NIVELES.DAT: Contiene los niveles del juego.
+* HISCORE.DAT: Si no existe se crea. Contiene el Puntaje mas alto (record).
+* SAMPLES.BTF: Contiene todos los sonidos del juego.
+
+	Para los que les interese ver el codigo, esta el fuente del juego y
+una TPU llamada KeyConst.tpu que solo posee una funcion que devuelve el nombre
+de las teclas para la opcion de personalizar las teclas.
+	Tambien incluye un programita extra para crear nuevos niveles, 
+si se te quedan cortos los que yo hice, que la verdad no son demasiados.
+	El editor es facil de manejar, es en modo texto y se utiliza el mouse.
+Decidi no incluir el codigo fuente, porque necesita de una libreria de manejo
+del mouse que yo hice y ya eran muchas cosas para incluir (fuente del editor + TPU
+ de manejo de mouse + fuente del TPU). Aunque si desean mejorarlo, pidanme el fuente
+y yo se los mando.
+
+2.1 Como Jugar
+	Es bastante facil. Se trata de acomodar columnas de forma tal de hacer
+coincidir 3 o mas fichas del mismo color. Las coincidencias son horizontales o
+verticales, pero no diagonales. Se pueden realizar COMBOS cuando se realicen
+coincidencias seguidas.
+	Los combos te proporcionan armas. Con un combo de 2X se incrementa un
+arma cualquiera en uno, con uno de 3X en dos, 4X en tres y asi sucesivamente.
+	El objetivo de todo esto es hacer caer (o sea tocar el suelo), a los 
+tres objetos que se encuentran en el area de juego. Pueden ser COPAS, MONITORES o
+LATAS DE GASEOSA.
+	Hay que hacerlos caer antes de que el tiempo llegue a 0 o las llamas de abajo
+los quemaran haciendote perder una vida.
+
+2.2 ARMAS
+	
+	BOMBA: Destruye todo lo que hay en una radio de 2 cuadritos a la redonda.
+	       Daña los objetos en uno. Explota por contacto.
+
+	LASER: Destruye todo lo que haya en una linea. Elimina los objetos directamente.
+	       Se dispara cuando ha llegado abajo o con la tecla definida para disparar.	
+	
+	DESVANECEDOR: Desvanece los elementos pertenecientes al mismo tipo de elemento
+		      con el cual ha entrado en contacto. Si toca un objeto, se dañan en uno.
+
+2.3 OBJETOS
+	Hacer caer a los objetos es el objetivo principal. Los tres tipo de objetos son:
+
+	LATA DE GASEOSA: Resistencia -> 2
+	MONITOR	       : Resistencia -> 2	
+	COPA DE ORO    : Resistencia -> 3
+
+	Cuando se eliminan todos los objetos no se pasa de nivel, sino que se repite el mismo.
+		
+
+2.4 LLAMAS
+	Las llamas se activan cuando el tiempo llega a cero. Queman todo los elementos incluidos
+los objetos. Se pierde una vida y no se pasa de nivel.
+
+
+2.5 COMBOS
+	Para realizar los combos se deben ealizar coincidencias cosecutivas. Los combos te dan
+armas, y la cantidad depende de la cantidad de combos. El tipo de arma es al azar.
+
+2.6 BONUS
+	Aca se contabilizan los puntos extra como el Tiempo restante, el daño de los objetos, 
+si te quedaste con bombas, laser o desvanecedores sin usar, etc.
+
+3.1 COMO HACER NIVELES
+	Con el editor podes hacer mas niveles. Es facil de manejar, aunque para hacer el nivel hay
+que tener ciertos aspectos en cuenta:
+
+	1) Un nivel no debe tener coincidencias ya de por si, o no tendría sentido. Ademas si hay
+	   coincidencias del tipo toda la matriz del mismo tipo, seguramente se llenara la pila
+	   cuando guarde las coincidencias, y el programa fallara.
+
+	2) Un nivel debe poseer 3 Objetos. Pueden estar en cualquier fila (mas vale que no esten 
+	   los 3 ya abajo), pero no pueden estar en la misma columna, ya que el que este arriba
+	   del otro nunca caería.
+
+	3) Conviene hacer un backup de Niveles.dat antes de agregarle nuevos niveles, por si falla.
+
+	La pantalla de menu principal es la siguiente:
+
+
+	        Editor de Niveles
+	            Ver. 1.0
+
+        1. Crear Nivel
+        2. Modificar Nivel
+        3. Salir
+        Opcion:
+
+3.2) CREANDO UN NUEVO NIVEL	
+	El editor de niveles presentara la siguiente pantalla:
+
+
+43, 16                       No Olvides poner 3 nueves en distintas columnas
+
+
+
+
+
+
+
+                    0000000000
+                    0000000000
+                    0000000000
+                    0000000000
+                    0000000000
+                    0000000000
+                    0000000000
+                    0000000000
+                    0000000000
+                    0000000000
+
+
+La esquina superior derecha, presenta las coordenadas del mouse, abajo esta la matriz.
+Haciendo click sobre un cero cualquiera, se espera la presion de una tecla.
+Las teclas que se pueden pulsar son las teclas del 1 al 6 y el 9.
+Los numeros del 1 al 6 representan los distintos tipos de ficha, y el nueve un objeto cualquiera.
+No pongas mas de 3 nueves y tampoco dejes ceros a modo de espacio vacio, porque el juego solo lo
+hara caer. Por ejemplo
+                    
+
+		    0000000000
+                    0000000000
+                    0000000000
+                    0000000000
+                    0000000000
+                    0000900000
+                    0009100000
+                    0091000000
+                    0010000000
+                    0100000000
+
+Esta mal porque los ceros debajo de los unos, desapareceran cuando el juego comience y los 3 nueves
+caeran dando por terminado el nivel.
+
+	            0000000000
+                    0000000000
+                    0000000000
+                    0000000000
+                    0000000000
+                    0000900000
+                    0009100000
+                    0091200000
+                    0012300000
+                    0123200000
+
+	             Esta bien
+
+Presionando ESC, te pedirá si lo quieres guardar, si le dices que si, te pedirá el numero
+de nivel que ocupará, sugiriendote el numero del proximo nivel.
+
+3.3) MODIFICANDO UN NIVEL	
+	Aca te pedirá que introduzcas el numero de nivel que queres modificar y luego te 
+lo cargara si existe para que puedas modificarlo.
+	Con ESC sales y pedirá la confirmación para guardar los cambios.
+	Las restricciones son las mismas que si estarías crando un nuevo nivel.
+
+
+Bueno creo que eso es todo, ya se que este archivo de texto no explica como hice el juego, ni
+nada de eso, pero creo que viendo el codigo se pueden aprender cosas.
+
+4.1 AGRADECIMIENTOS
+	
+	* A los creadores de U.G.O., ya que sin esta libreria no se hubiera podido realizar el juego.
+	* A SnaKe, por resolver las dudas que me surgieron en la creacion del juego.
+	* A mi hermano Nicolas por las voces en el juego.
+	* A todos los artistas que me acompañaron con buena musica mientras programaba:
+	
+	-VAN HALEN
+	-STEVE VAI
+	-JOE SATRIANI
+	-RATA BLANCA
+	-ERIC JOHNSON
+	-OZZY OSBOURNE
+	-ALIANZA
+	-STRATOVARIUS
+	-LUIS SALINAS
+	-DEEP PURPLE
+	-DREAM THEATER
+	-STEVE HACKETT
+	-ALMAFUERTE
+	-ETC...
+
+	* COOL EDIT 2000 (para editar los sonidos)
+	* PAINT SHOP PRO (para crear todos los sprites)
+
+JORGE AGUSTIN MERILES (Psycho Mantis).
+agu_777@hotmail.com
+
+SAN SALVADOR DE JUJUY, JUJUY, ARGENTINA - 2 DE AGOSTO DE 2002
+
+
+
+
+
